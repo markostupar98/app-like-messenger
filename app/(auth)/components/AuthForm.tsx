@@ -53,7 +53,13 @@ const AuthForm = () => {
       <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === "REGISTER" && (
-            <Input label="Name" register={register} id="name" errors={errors} />
+            <Input
+              label="Name"
+              register={register}
+              id="name"
+              errors={errors}
+              disabled={isLoading}
+            />
           )}
           <Input
             label="Email"
@@ -61,6 +67,8 @@ const AuthForm = () => {
             id="email"
             errors={errors}
             type="email"
+            disabled={isLoading}
+
           />
           <Input
             label="Password"
@@ -68,6 +76,7 @@ const AuthForm = () => {
             id="password"
             errors={errors}
             type="password"
+            disabled={isLoading}
           />
           <div>
             <Button disabled={isLoading} fullWidth type="submit">
@@ -104,11 +113,8 @@ const AuthForm = () => {
               ? "New to messenger?"
               : "Already have an account?"}
           </div>
-          <div
-            onClick={toggleVariant}
-            className="underline cursor-pointer"
-          >
-            {variant === 'LOGIN' ? 'Create an account' : 'Login'}
+          <div onClick={toggleVariant} className="underline cursor-pointer">
+            {variant === "LOGIN" ? "Create an account" : "Login"}
           </div>
         </div>
       </div>
