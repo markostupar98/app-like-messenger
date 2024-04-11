@@ -1,15 +1,25 @@
-import Sidebar from "../components/sidebar/Sidebar";
-import getConversations from "../services/getConversations";
-import ConversationList from "./components/ConversationList";
+import getConversations from "../services/getConversations"
+import getUsers from "../services/getUsers";
+import Sidebar from "../components/sidebar/Sidebar"
+import ConversationList from "./components/ConversationList"
 
-export default async function ConversationsLayout({children}:{ children:React.ReactNode}) {
-    const conversations = await getConversations()
-    return (
-        <Sidebar>
-            <div className="h-full">
-                <ConversationList initalItems={conversations} />
-                {children}
-            </div>
-        </Sidebar>
-    )
-}
+export default async function ConversationsLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
+  const conversations = await getConversations();
+  const users = await getUsers();
+
+  return (
+    <Sidebar>
+      <div className="h-full">
+        <ConversationList
+          users={users}
+          initialItems={conversations}
+        />
+        {children}
+      </div>
+    </Sidebar>
+  )
+};

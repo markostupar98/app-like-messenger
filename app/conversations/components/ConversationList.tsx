@@ -7,11 +7,13 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ConversationBox from "./ConversationBox";
+import { User } from "@prisma/client";
 
 // Types
 
 interface ConversationListProps {
   initalItems: FullConversationType[];
+  users:User[]
 }
 
 const ConversationList = ({ initalItems }: ConversationListProps) => {
