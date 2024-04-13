@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ConversationBox from "./ConversationBox";
 import { User } from "@prisma/client";
+import GroupChatModal from "./GroupChatModal";
 
 // Types
 
@@ -16,24 +17,28 @@ interface ConversationListProps {
   users:User[]
 }
 
-const ConversationList = ({ initalItems }: ConversationListProps) => {
+const ConversationList = ({ initalItems, users }: ConversationListProps) => {
   const [items, setItems] = useState(initalItems);
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const { conversationId, isOpen } = useConversation();
   return (
+    <> 
+    <GroupChatModal users={users} isOpen={isModalOpen} onClose={()=>setIsModalOpen(false)} />
     <aside
     className={clsx(`
-      fixed
-      inset-y-0
-      pb-20
-      lg:pb-0
-      lg:left-20
-      lg:w-80
-      lg:block
-      overflow-y-auto
-      border-r
-      border-gray-200
+    fixed
+    inset-y-0
+    pb-20
+    lg:pb-0
+    lg:left-20
+    lg:w-80
+    lg:block
+    overflow-y-auto
+    border-r
+    border-gray-200
     `,
       isOpen ? 'hidden' : 'block w-full left-0'
     )}
@@ -48,6 +53,7 @@ const ConversationList = ({ initalItems }: ConversationListProps) => {
           Messages
         </div>
         <div
+        onClick={()=>setIsModalOpen(true)}
           className="
             rounded-full
             p-2
@@ -61,15 +67,17 @@ const ConversationList = ({ initalItems }: ConversationListProps) => {
           <MdOutlineGroupAdd size={20} />
         </div>
       </div>
-      {items.map((item) => (
-        <ConversationBox
-          key={item.id}
-          data={item}
-          selected={conversationId === item.id}
-        />
-      ))}
+      {items && items.map((item) => (
+  <ConversationBox
+    key={item.id}
+    data={item}
+    selected={conversationId === item.id}
+  />
+))}
+
     </div>
   </aside>
+  </>
   );
 };
 export default ConversationList;

@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useMemo, useState } from "react";
 import Avatar from "@/app/components/Avatar";
-import Modal from "@/app/components/Modal";
+import ConfirmModal from "./ConfirmModal";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -141,7 +141,7 @@ const ProfileDrawer = ({ isOpen, onClose, data }: ProfileDrawerProps) => {
           </div>
         </Dialog>
       </Transition.Root>
-    </ConfirmModal>
+    </>
   );
 };
 export default ProfileDrawer;
