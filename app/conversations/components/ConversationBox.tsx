@@ -11,16 +11,15 @@ import { FullConversationType } from "@/app/types";
 import useOtherUser from "@/app/hooks/useOtherUser";
 import Avatar from "@/app/components/Avatar";
 import AvatarGroup from "@/app/components/AvatarGroup";
-// import AvatarGroup from "@/app/components/AvatarGroup";
 
 interface ConversationBoxProps {
-  data: FullConversationType;
+  data: FullConversationType,
   selected?: boolean;
 }
 
 const ConversationBox: React.FC<ConversationBoxProps> = ({
   data,
-  selected,
+  selected
 }) => {
   const otherUser = useOtherUser(data);
   const session = useSession();
@@ -51,12 +50,13 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
       return false;
     }
 
-    return seenArray.filter((user) => user.email === userEmail).length !== 0;
+    return seenArray
+    .filter((user) => user.email === userEmail).length !== 0;
   }, [userEmail, lastMessage]);
 
   const lastMessageText = useMemo(() => {
     if (lastMessage?.image) {
-      return "Sent an image";
+      return 'Sent an image';
     }
 
     if (lastMessage?.body) {
@@ -66,27 +66,29 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     return "Started a conversation";
   }, [lastMessage]);
 
-  return (
+  return ( 
     <div
       onClick={handleClick}
-      className={clsx(
-        `
-      w-full,
-      relative
-      flex
-      items-center
-      space-x-3
-      hover:bg-neutral-100
-      rounded-lg
-      transition
-      cursor-pointer
-      p-3
+      className={clsx(`
+        w-full,
+        relative
+        flex
+        items-center
+        space-x-3
+        hover:bg-neutral-100
+        rounded-lg
+        transition
+        cursor-pointer
+        p-3
       `,
-        selected ? "bg-neutral-100" : "bg-white"
+        selected ? 'bg-neutral-100' : 'bg-white'
       )}
     >
-      {data.isGroup ? <AvatarGroup users={data.users} /> : <Avatar user={otherUser} />}
-
+      {data.isGroup ? (
+        <AvatarGroup users={data.users} />
+      ) : (
+        <Avatar user={otherUser} />
+      )}
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <div
@@ -114,17 +116,16 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
                   font-light
                 "
               >
-                {format(new Date(lastMessage.createdAt), "p")}
+                {format(new Date(lastMessage.createdAt), 'p')}
               </p>
             )}
           </div>
           <p
-            className={clsx(
-              `
+            className={clsx(`
               truncate
               text-sm
             `,
-              hasSeen ? "text-gray-500" : "text-black font-medium"
+              hasSeen ? 'text-gray-500' : 'text-black font-medium'
             )}
           >
             {lastMessageText}
@@ -132,7 +133,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         </div>
       </div>
     </div>
-  );
-};
-
+   );
+}
+ 
 export default ConversationBox;
