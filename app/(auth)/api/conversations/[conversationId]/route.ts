@@ -1,4 +1,5 @@
 import prisma from "@/app/lib/prismadb"
+import { pusherServer } from "@/app/lib/pusher"
 import getCurrentUser from "@/app/services/getCurrentUser"
 import { NextResponse } from "next/server"
 
@@ -34,6 +35,13 @@ export async function DELETE(request:Request,{params}:{params:IParams}) {
                 }
             }
         })
+
+        existingConversation.users.forEach((user)=>{
+            if(user.email){
+                pusherServer.trigger(user.email,'conversation:remove', existingConversation)
+            }
+        })
+
         return NextResponse.json(deletedConversation)
     }catch(error:any){
         console.log(error,'Conversation error')
